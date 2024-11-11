@@ -1,0 +1,18 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="#E0E0E0" /> <!-- Warna latar abu-abu muda -->
+
+    <corners android:radius="8dp" /> <!-- Sudut melengkung -->
+
+    <size android:width="200dp" android:height="200dp" /> <!-- Ukuran gambar -->
+
+    <stroke
+        android:width="2dp"
+        android:color="#BDBDBD" /> <!-- Garis tepi abu-abu lebih gelap -->
+
+    <!-- Tambahan ikon -->
+    <bitmap
+        android:gravity="center"
+        android:src="@drawable/ic_placeholder" /> <!-- Ganti dengan ikon default -->
+</shape>
