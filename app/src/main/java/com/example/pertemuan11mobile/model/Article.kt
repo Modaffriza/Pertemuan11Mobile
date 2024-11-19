@@ -1,5 +1,7 @@
 package com.example.pertemuan11mobile.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class Article(
@@ -7,7 +9,8 @@ data class Article(
     @SerializedName("byline") val byline: String,
     @SerializedName("abstract") val summary: String,
     @SerializedName("url") val url: String,
-    @SerializedName("multimedia") val multimedia: List<Multimedia>? // Multimedia list, nullable
+    @SerializedName("multimedia") val multimedia: List<Multimedia>?,
+
 )
 
 data class Multimedia(
@@ -20,3 +23,4 @@ data class Multimedia(
     @SerializedName("caption") val caption: String,
     @SerializedName("copyright") val copyright: String
 )
+

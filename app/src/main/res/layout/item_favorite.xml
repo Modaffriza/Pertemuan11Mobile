@@ -1,4 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -16,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
 
     <TextView
         android:id="@+id/tvByline"
@@ -24,10 +27,4 @@
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:textColor="#757575" />
-
-    <ImageButton
-        android:id="@+id/btnFavorite"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_favorite_border" />
 </LinearLayout>

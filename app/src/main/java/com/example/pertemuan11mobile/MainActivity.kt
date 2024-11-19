@@ -10,60 +10,69 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pertemuan11mobile.R
 import com.example.pertemuan11mobile.adapter.ArticleAdapter
 import com.example.pertemuan11mobile.adapter.ArticleResponse
+import com.example.pertemuan11mobile.database.FavoriteDatabase
+import com.example.pertemuan11mobile.fragment.FavoriteFragment
+import com.example.pertemuan11mobile.fragments.TopStoriesFragment
 import com.example.pertemuan11mobile.model.Article
+import com.example.pertemuan11mobile.model.FavoriteArticle
 import com.example.pertemuan11mobile.network.ApiClient
+import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: ArticleAdapter
-    private val apiKey = "9PxSnNYoTdMe8WrculQVxFoWcKwU0iOl"  // Replace with your actual API key
+    private lateinit var tabLayout: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        tabLayout = findViewById(R.id.tabLayout)
 
-        // Initialize the adapter with an empty list
-        adapter = ArticleAdapter(emptyList())
-        recyclerView.adapter = adapter
+        // Tambahkan tab navigasi
+        setupTabNavigation()
 
-        fetchArticles()
-    }
-
-    private fun fetchArticles() {
-        val client = ApiClient.getInstance()
-        client.getTopStories(apiKey).enqueue(object : Callback<ArticleResponse> {
-            override fun onResponse(
-                call: Call<ArticleResponse>,
-                response: Response<ArticleResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val articles = response.body()?.results ?: emptyList()
-                    // Update the adapter with the new list of articles
-                    adapter = ArticleAdapter(articles)
-                    recyclerView.adapter = adapter
-                } else {
-                    Toast.makeText(this@MainActivity, "Failed to fetch data", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-
-            override fun onFailure(call: Call<ArticleResponse>, t: Throwable) {
-                Toast.makeText(this@MainActivity, "Network error: ${t.message}", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        })
-
+        // Set padding untuk insets sistem
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    /**
+     * Fungsi untuk mengatur tab navigasi
+     */
+    private fun setupTabNavigation() {
+        tabLayout.addTab(tabLayout.newTab().setText("Top Stories"))
+        tabLayout.addTab(tabLayout.newTab().setText("Favorites"))
+
+        // Default fragment (Top Stories)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, TopStoriesFragment())
+            .commit()
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val fragment = when (tab?.position) {
+                    0 -> TopStoriesFragment()  // Tab 0: Top Stories
+                    1 -> FavoriteFragment()    // Tab 1: Favorites
+                    else -> null
+                }
+                fragment?.let {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, it)
+                        .commit()
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
     }
 }
