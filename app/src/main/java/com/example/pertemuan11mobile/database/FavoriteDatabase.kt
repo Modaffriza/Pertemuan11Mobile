@@ -19,7 +19,7 @@ abstract class FavoriteDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     FavoriteDatabase::class.java,
-                    "favorite_database6"
+                    "favorite_database7"
                 ).build()
                 INSTANCE = instance
                 instance

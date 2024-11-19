@@ -68,7 +68,7 @@ class TopStoriesFragment : Fragment() {
             title = article.title,
             byline = article.byline,
             summary = article.summary,
-            imageUrl = article.multimedia?.find { it.format == "superJumbo" }?.url ?:""
+            imageUrl = article.multimedia?.find { it.format == "Super Jumbo" }?.url ?:""
 
         )
 

@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class ArticleAdapter(
     private var articles: List<Article>,
-    private val onFavoriteClick: (Article) -> Unit // Callback function
+    private val onFavoriteClick: (Article) -> Unit
 ) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
@@ -33,7 +33,7 @@ class ArticleAdapter(
 
     override fun getItemCount() = articles.size
 
-    // Update articles and refresh the RecyclerView
+
     fun updateArticles(newArticles: List<Article>) {
         this.articles = newArticles
         notifyDataSetChanged() // Refresh the entire dataset
@@ -49,12 +49,12 @@ class ArticleAdapter(
             tvTitle.text = article.title
             tvByline.text = article.byline
 
-            // Load image
+
             article.multimedia?.firstOrNull()?.url?.let {
                 Glide.with(itemView.context).load(it).into(imageView)
             }
 
-            // Update favorite icon state
+
             CoroutineScope(Dispatchers.IO).launch {
                 val dao = FavoriteDatabase.getInstance(itemView.context).favoriteDao()
                 val isFavorited = dao.getFavoriteByUrl(article.url) != null
@@ -66,9 +66,8 @@ class ArticleAdapter(
                 }
             }
 
-            // Handle favorite button click
             btnFavorite.setOnClickListener {
-                onFavoriteClick(article) // Call the callback function from MainActivity
+                onFavoriteClick(article)
             }
         }
     }

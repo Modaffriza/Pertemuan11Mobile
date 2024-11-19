@@ -34,10 +34,9 @@ class MainActivity : AppCompatActivity() {
 
         tabLayout = findViewById(R.id.tabLayout)
 
-        // Tambahkan tab navigasi
+
         setupTabNavigation()
 
-        // Set padding untuk insets sistem
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -45,14 +44,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Fungsi untuk mengatur tab navigasi
-     */
+
     private fun setupTabNavigation() {
         tabLayout.addTab(tabLayout.newTab().setText("Top Stories"))
         tabLayout.addTab(tabLayout.newTab().setText("Favorites"))
 
-        // Default fragment (Top Stories)
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, TopStoriesFragment())
             .commit()
